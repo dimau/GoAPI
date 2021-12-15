@@ -1,8 +1,10 @@
 package domain
 
 import (
-	"errors"
 	"fmt"
+	"net/http"
+
+	"github.com/Dimau/GoAPI/utils"
 )
 
 var (
@@ -11,10 +13,14 @@ var (
 	}
 )
 
-func GetUser(userId int64) (*User, error) {
+func GetUser(userId int64) (*User, *utils.ApplicationError) {
 	user := users[userId]
 	if user == nil {
-		return nil, errors.New(fmt.Sprintf("user %v was not found", userId))
+		return nil, &utils.ApplicationError{
+			Message:    fmt.Sprintf("user %v was not found", userId),
+			StatusCode: http.StatusNotFound,
+			Code:       "not_found",
+		}
 	}
 
 	return user, nil
