@@ -5,8 +5,14 @@ import (
 	"github.com/Dimau/GoAPI/utils"
 )
 
-func GetUser(userId int64) (*domain.User, *utils.ApplicationError) {
-	user, err := domain.GetUser(userId)
+var (
+	UsersService usersService
+)
+
+type usersService struct{}
+
+func (u *usersService) GetUser(userId int64) (*domain.User, *utils.ApplicationError) {
+	user, err := domain.UserDAO.GetUser(userId)
 	if err != nil {
 		return nil, err
 	}

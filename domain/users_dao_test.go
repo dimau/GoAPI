@@ -5,9 +5,15 @@ import (
 	"testing"
 )
 
+var (
+	userDaoMock usersDaoMock
+)
+
+type usersDaoMock struct{}
+
 func TestGetUserNoUserFound(t *testing.T) {
 	// Вызываем тестируемую функцию из этого же пакета
-	user, err := GetUser(0)
+	user, err := UserDAO.GetUser(0)
 
 	// Проверяем, что с такими входными данными функция возвращает nil вместо user
 	if user != nil {
@@ -24,4 +30,3 @@ func TestGetUserNoUserFound(t *testing.T) {
 		t.Error("we were expecting 404 when user is not found")
 	}
 }
-
